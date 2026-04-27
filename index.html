@@ -90,8 +90,8 @@
         font-size: 14px;
         margin-top: -8px;
         margin-bottom: 12px;
-        min-height: 18px;
         opacity: 0.85;
+        min-height: 18px;
       }
 
       button {
@@ -155,7 +155,7 @@
       <textarea id="motivo" placeholder="Descreva o motivo..."></textarea>
 
       <label>Escolha o dia</label>
-      <input type="date" id="data" oninput="verificarData()" />
+      <input type="date" id="data" onchange="atualizarData()" />
 
       <div id="dataFormatada"></div>
 
@@ -189,14 +189,6 @@
     </footer>
 
     <script>
-      function verificarData() {
-        const data = document.getElementById("data").value;
-
-        if (data.length === 10) {
-          atualizarData();
-        }
-      }
-
       function atualizarData() {
         const data = document.getElementById("data").value;
         const select = document.getElementById("horario");
@@ -217,22 +209,19 @@
           "julho","agosto","setembro","outubro","novembro","dezembro"
         ];
 
-        // ✅ CORREÇÃO DEFINITIVA DO BUG DE DATA
         const [ano, mes, dia] = data.split("-");
         const d = new Date(Number(ano), Number(mes) - 1, Number(dia));
 
         if (d.getDay() === 0 || d.getDay() === 6) {
           texto.textContent = "Selecione um dia útil (segunda a sexta)";
           texto.style.color = "#f87171";
-
           document.getElementById("horario").innerHTML =
             "<option>Dia inválido</option>";
-
           document.getElementById("horario").disabled = true;
           return;
-        } else {
-          texto.style.color = "#ffffff";
         }
+
+        texto.style.color = "#ffffff";
 
         const diaFormatado = String(d.getDate()).padStart(2, "0");
         const mesNome = meses[d.getMonth()];
@@ -268,11 +257,29 @@
           return;
         }
 
+        const diasSemana = [
+          "domingo","segunda-feira","terça-feira",
+          "quarta-feira","quinta-feira","sexta-feira","sábado"
+        ];
+
+        const meses = [
+          "janeiro","fevereiro","março","abril","maio","junho",
+          "julho","agosto","setembro","outubro","novembro","dezembro"
+        ];
+
+        const [ano, mes, dia] = data.split("-");
+        const d = new Date(Number(ano), Number(mes) - 1, Number(dia));
+
+        const nomeDia = diasSemana[d.getDay()];
+        const nomeMes = meses[d.getMonth()];
+        const diaFormatado = String(d.getDate()).padStart(2, "0");
+
         const mensagem = `Olá, gostaria de agendar um horário na sala de informática.
 
 Motivo: ${motivo}
 
-Data: ${data}
+Dia: ${nomeDia}
+Data: ${diaFormatado} de ${nomeMes}
 Horário: ${horario}`;
 
         const telefone = "5588992358152";
