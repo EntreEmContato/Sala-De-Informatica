@@ -26,7 +26,7 @@
       }
 
       body {
-        background: var(--bg-gradient) no-repeat center/cover;
+        background: var(--bg-gradient);
         min-height: 100vh;
         font-family: "Inter", sans-serif;
         color: var(--text-color);
@@ -60,15 +60,46 @@
         display: block;
       }
 
+      #separador {
+        margin: 18px 0;
+        text-align: center;
+      }
+
+      #separador div {
+        height: 1px;
+        background: rgba(255,255,255,0.15);
+        margin: 10px 0;
+      }
+
+      #separador span {
+        font-size: 12px;
+        opacity: 0.7;
+      }
+
       #instrucao {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
         margin-bottom: 12px;
         font-size: 14px;
         opacity: 0.85;
+        text-align: center;
       }
 
-      textarea,
-      input,
-      select {
+      #instrucao strong {
+        white-space: nowrap;
+        color: #ffffff;
+      }
+
+      #alerta-regras {
+        margin-bottom: 12px;
+        font-size: 12px;
+        opacity: 0.7;
+        color: #fbbf24;
+      }
+
+      textarea, input, select {
         width: 100%;
         padding: 16px;
         border-radius: 12px;
@@ -76,6 +107,8 @@
         margin-bottom: 12px;
         font-size: 14px;
         outline: none;
+        background: #ffffff;
+        color: #000;
       }
 
       label {
@@ -94,23 +127,80 @@
         min-height: 18px;
       }
 
+      /* --- ESTILO DOS BOTÕES ATUALIZADO --- */
+
       button {
         width: 100%;
         padding: 18px;
         border-radius: 14px;
         border: none;
-        font-weight: 600;
+        font-weight: 700;
         font-size: 16px;
-        background: linear-gradient(135deg, #2563eb, #3b82f6);
         color: white;
         cursor: pointer;
-        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
-        transition: all 0.25s ease;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animação de entrada suave */
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        background-size: 200% auto;
+      }
+
+      /* Botão Agendar (Azul Oceano) */
+      button:first-of-type {
+        background-image: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #2563eb 100%);
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+      }
+
+      /* Botão Regras (Roxo Violeta) */
+      #btn-regras {
+        background-image: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #7c3aed 100%);
+        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+      }
+
+      /* Efeito de Reflexo Interno */
+      button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          transparent,
+          rgba(255, 255, 255, 0.15),
+          transparent
+        );
+        transition: all 0.6s;
       }
 
       button:hover {
-        transform: scale(1.03);
+        transform: translateY(-5px); /* Sobe um pouco */
+        filter: brightness(1.1);
+        background-position: right center; /* Muda o gradiente */
       }
+
+      /* Quando passa o mouse, o reflexo atravessa o botão */
+      button:hover::before {
+        left: 100%;
+      }
+
+      /* Sombras específicas no Hover */
+      button:first-of-type:hover {
+        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.5);
+      }
+
+      #btn-regras:hover {
+        box-shadow: 0 10px 25px rgba(124, 58, 237, 0.5);
+      }
+
+      button:active {
+        transform: translateY(0); /* Volta ao normal ao clicar */
+      }
+
+      /* --- FIM DO ESTILO DOS BOTÕES --- */
 
       #horarios {
         font-size: 13px;
@@ -122,6 +212,42 @@
         line-height: 1.5;
       }
 
+      .modal {
+        display: none; 
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(4px);
+      }
+
+      .modal-content {
+        background: #1e2937;
+        margin: 10% auto;
+        padding: 25px;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 450px;
+        max-height: 80vh;
+        overflow-y: auto;
+        text-align: left;
+        border: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .modal-content h3 {
+        margin-bottom: 15px;
+        color: #fbbf24;
+      }
+
+      .close-btn {
+        background: #ef4444 !important;
+        box-shadow: none !important;
+        margin-top: 15px;
+      }
+
       footer {
         margin-top: auto;
         text-align: center;
@@ -130,161 +256,119 @@
         opacity: 0.7;
       }
 
-      footer a {
-        color: #ffffff;
-        text-decoration: none;
-      }
+      footer a { color: #ffffff; text-decoration: none; }
     </style>
   </head>
 
   <body>
     <div id="container">
-
       <h1 id="title">Sala de Informática</h1>
       <h2 id="subtitle">Agendamento rápido</h2>
 
       <div id="profile">
-        <img src="./assets/imagem_cortada_circular (5).png" />
+        <img src="./assets/imagem_cortada_circular (5).png" alt="Perfil" />
       </div>
 
-      <p id="instrucao">
-        Explique o motivo, escolha o dia e o horário e aperte em "Agendar horário"
-      </p>
+      <div id="separador">
+        <div></div>
+        <span>⬇️ Agendamento da sala abaixo</span>
+        <div></div>
+      </div>
 
-      <label>Descreva o motivo</label>
-      <textarea id="motivo" placeholder="Descreva o motivo..."></textarea>
+      <div id="instrucao">
+        <span>Explique o motivo, escolha o dia e o horário e aperte em</span>
+        <strong>"Agendar horário"</strong>
+      </div>
 
-      <label>Escolha o dia</label>
+      <p id="alerta-regras">⚠️ Atenção às regras da sala de informática</p>
+
+      <label for="motivo">Descreva o motivo</label>
+      <textarea id="motivo" placeholder="Ex: Aula de pesquisa..."></textarea>
+
+      <label for="data">Escolha o dia</label>
       <input type="date" id="data" onchange="atualizarData()" />
 
       <div id="dataFormatada"></div>
 
-      <label>Escolha o horário</label>
+      <label for="horario">Escolha o horário</label>
       <select id="horario" disabled>
         <option>Escolha o dia primeiro</option>
       </select>
 
-      <button onclick="enviarWhatsApp()">
-        Agendar horário
+      <button onclick="enviarWhatsApp()">Agendar horário</button>
+
+      <button id="btn-regras" onclick="abrirRegras()">
+        Regras da sala - clique aqui
       </button>
 
       <div id="horarios">
-        <strong>⚠️ Atenção</strong><br>
-        Horários disponíveis:<br><br>
-
+        <strong>⚠️ Atenção</strong><br><br>
         Segunda a quinta:<br>
         08:30–10:00 / 14:00–15:30<br><br>
-
         Sexta:<br>
         08:30–09:30
       </div>
+    </div>
 
+    <div id="modalRegras" class="modal">
+      <div class="modal-content">
+        <h3>Regras de Uso</h3>
+        <ol style="color: white; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+          <li><strong>Agendamento obrigatório:</strong> Deve ser organizado previamente.</li>
+          <li><strong>Responsabilidade:</strong> Mantenha a organização.</li>
+          <li><strong>Supervisão:</strong> Nenhuma turma sem responsável.</li>
+          <li><strong>Permanência:</strong> Apenas para fins pedagógicos.</li>
+          <li><strong>Alimentos:</strong> Proibido comer ou beber na sala.</li>
+          <li><strong>Materiais:</strong> Não retire equipamentos sem permissão.</li>
+          <li><strong>Configurações:</strong> Não altere o sistema dos PCs.</li>
+          <li><strong>Organização:</strong> Desligue tudo e organize as cadeiras ao sair.</li>
+        </ol>
+        <button class="close-btn" onclick="fecharRegras()">Fechar Regras</button>
+      </div>
     </div>
 
     <footer>
-      Feito por 
-      <a href="https://www.instagram.com/gustavot_orres/" target="_blank">
-        @gustavot_orres
-      </a>
+      Feito por <a href="https://www.instagram.com/gustavot_orres/" target="_blank">@gustavot_orres</a>
     </footer>
 
     <script>
+      function abrirRegras() { document.getElementById("modalRegras").style.display = "block"; }
+      function fecharRegras() { document.getElementById("modalRegras").style.display = "none"; }
+      window.onclick = function(event) {
+        if (event.target == document.getElementById("modalRegras")) fecharRegras();
+      }
+
       function atualizarData() {
-        const data = document.getElementById("data").value;
+        const dataInput = document.getElementById("data").value;
         const select = document.getElementById("horario");
         const texto = document.getElementById("dataFormatada");
-
         select.innerHTML = '<option value="">Selecione um horário</option>';
-        select.disabled = true;
-
-        if (!data) return;
-
-        const diasSemana = [
-          "domingo","segunda-feira","terça-feira",
-          "quarta-feira","quinta-feira","sexta-feira","sábado"
-        ];
-
-        const meses = [
-          "janeiro","fevereiro","março","abril","maio","junho",
-          "julho","agosto","setembro","outubro","novembro","dezembro"
-        ];
-
-        const [ano, mes, dia] = data.split("-");
+        if (!dataInput) return;
+        const [ano, mes, dia] = dataInput.split("-");
         const d = new Date(Number(ano), Number(mes) - 1, Number(dia));
-
         if (d.getDay() === 0 || d.getDay() === 6) {
-          texto.textContent = "Selecione um dia útil (segunda a sexta)";
+          texto.textContent = "Selecione um dia útil";
           texto.style.color = "#f87171";
-          document.getElementById("horario").innerHTML =
-            "<option>Dia inválido</option>";
-          document.getElementById("horario").disabled = true;
+          select.disabled = true;
           return;
         }
-
-        texto.style.color = "#ffffff";
-
-        const diaFormatado = String(d.getDate()).padStart(2, "0");
-        const mesNome = meses[d.getMonth()];
-        const semana = diasSemana[d.getDay()];
-
-        texto.textContent = `${diaFormatado} de ${mesNome}, ${semana}`;
-
-        let horarios = [];
-
-        if (d.getDay() >= 1 && d.getDay() <= 4) {
-          horarios = ["08:30","09:00","09:30","10:00","14:00","14:30","15:00","15:30"];
-        } else {
-          horarios = ["08:30","09:00","09:30"];
-        }
-
-        horarios.forEach(h => {
-          const option = document.createElement("option");
-          option.value = h;
-          option.textContent = h;
-          select.appendChild(option);
+        texto.textContent = `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth()+1).padStart(2, "0")}`;
+        texto.style.color = "white";
+        let h = (d.getDay() >= 1 && d.getDay() <= 4) ? ["08:30","09:00","09:30","10:00","14:00","14:30","15:00","15:30"] : ["08:30","09:00","09:30"];
+        h.forEach(hr => {
+          let opt = document.createElement("option");
+          opt.value = opt.textContent = hr;
+          select.appendChild(opt);
         });
-
         select.disabled = false;
       }
 
       function enviarWhatsApp() {
-        const motivo = document.getElementById("motivo").value;
-        const data = document.getElementById("data").value;
-        const horario = document.getElementById("horario").value;
-
-        if (!motivo || !data || !horario) {
-          alert("Preencha o motivo, o dia e o horário!");
-          return;
-        }
-
-        const diasSemana = [
-          "domingo","segunda-feira","terça-feira",
-          "quarta-feira","quinta-feira","sexta-feira","sábado"
-        ];
-
-        const meses = [
-          "janeiro","fevereiro","março","abril","maio","junho",
-          "julho","agosto","setembro","outubro","novembro","dezembro"
-        ];
-
-        const [ano, mes, dia] = data.split("-");
-        const d = new Date(Number(ano), Number(mes) - 1, Number(dia));
-
-        const nomeDia = diasSemana[d.getDay()];
-        const nomeMes = meses[d.getMonth()];
-        const diaFormatado = String(d.getDate()).padStart(2, "0");
-
-        const mensagem = `Olá, gostaria de agendar um horário na sala de informática.
-
-Motivo: ${motivo}
-
-Dia: ${nomeDia}
-Data: ${diaFormatado} de ${nomeMes}
-Horário: ${horario}`;
-
-        const telefone = "5588992358152";
-        const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
-
+        const m = document.getElementById("motivo").value;
+        const d = document.getElementById("data").value;
+        const h = document.getElementById("horario").value;
+        if (!m || !d || !h) return alert("Preencha tudo!");
+        const url = `https://wa.me/5588992358152?text=${encodeURIComponent(`Agendamento:\nMotivo: ${m}\nData: ${d}\nHorário: ${h}`)}`;
         window.open(url, "_blank");
       }
     </script>
