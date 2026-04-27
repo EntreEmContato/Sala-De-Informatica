@@ -13,11 +13,7 @@
     <title>Sala de Informática</title>
 
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
 
       :root {
         --text-color: #ffffff;
@@ -49,7 +45,6 @@
       #title {
         font-size: 32px;
         font-weight: 700;
-        letter-spacing: -0.5px;
         margin-bottom: 6px;
       }
 
@@ -71,24 +66,19 @@
         opacity: 0.85;
       }
 
-      textarea {
+      textarea,
+      input,
+      select {
         width: 100%;
         padding: 16px;
         border-radius: 12px;
         border: none;
         margin-bottom: 12px;
         font-size: 14px;
-        resize: none;
       }
 
-      input {
-        width: 100%;
-        padding: 16px;
-        border-radius: 12px;
-        border: none;
-        margin-bottom: 12px;
-        font-size: 16px;
-        text-align: center;
+      select:disabled {
+        opacity: 0.6;
       }
 
       label {
@@ -97,6 +87,14 @@
         font-size: 13px;
         margin: 8px 4px;
         opacity: 0.8;
+      }
+
+      /* DATA BONITA */
+      #dataFormatada {
+        font-size: 14px;
+        margin-top: -8px;
+        margin-bottom: 12px;
+        opacity: 0.85;
       }
 
       button {
@@ -156,18 +154,21 @@
         Explique o motivo, escolha o dia e o horário e aperte em "Agendar horário"
       </p>
 
-      <!-- 🔥 NOVO TÍTULO -->
       <label>Descreva o motivo</label>
       <textarea 
         id="motivo" 
-        placeholder="Ex: Aula, atividade, impressão..."
+        placeholder="Descreva o motivo do agendamento..."
       ></textarea>
 
       <label>Escolha o dia</label>
-      <input type="date" id="data" />
+      <input type="date" id="data" onchange="atualizarData()" />
+
+      <div id="dataFormatada"></div>
 
       <label>Escolha o horário</label>
-      <input type="time" id="horario" />
+      <select id="horario" disabled>
+        <option>Escolha o dia primeiro</option>
+      </select>
 
       <button onclick="enviarWhatsApp()">
         Agendar horário
@@ -194,6 +195,58 @@
     </footer>
 
     <script>
+      function atualizarData() {
+        const data = document.getElementById("data").value;
+        const select = document.getElementById("horario");
+        const texto = document.getElementById("dataFormatada");
+
+        select.innerHTML = '<option value="">Selecione um horário</option>';
+        select.disabled = true;
+
+        if (!data) return;
+
+        const diasSemana = [
+          "domingo","segunda-feira","terça-feira",
+          "quarta-feira","quinta-feira","sexta-feira","sábado"
+        ];
+
+        const meses = [
+          "janeiro","fevereiro","março","abril","maio","junho",
+          "julho","agosto","setembro","outubro","novembro","dezembro"
+        ];
+
+        const d = new Date(data);
+
+        if (d.getDay() === 0 || d.getDay() === 6) {
+          alert("Só funciona de segunda a sexta!");
+          texto.textContent = "";
+          return;
+        }
+
+        const dia = String(d.getDate()).padStart(2, "0");
+        const mes = meses[d.getMonth()];
+        const semana = diasSemana[d.getDay()];
+
+        texto.textContent = `${dia} de ${mes}, ${semana}`;
+
+        let horarios = [];
+
+        if (d.getDay() >= 1 && d.getDay() <= 4) {
+          horarios = ["08:30","09:00","09:30","10:00","14:00","14:30","15:00","15:30"];
+        } else {
+          horarios = ["08:30","09:00","09:30"];
+        }
+
+        horarios.forEach(h => {
+          const option = document.createElement("option");
+          option.value = h;
+          option.textContent = h;
+          select.appendChild(option);
+        });
+
+        select.disabled = false;
+      }
+
       function enviarWhatsApp() {
         const motivo = document.getElementById("motivo").value;
         const data = document.getElementById("data").value;
@@ -204,29 +257,12 @@
           return;
         }
 
-        const [ano, mesNumero, dia] = data.split("-");
-
-        const meses = [
-          "janeiro", "fevereiro", "março", "abril",
-          "maio", "junho", "julho", "agosto",
-          "setembro", "outubro", "novembro", "dezembro"
-        ];
-
-        const mes = meses[parseInt(mesNumero) - 1];
-
-        const dataObj = new Date(ano, mesNumero - 1, dia);
-        const diaSemana = dataObj.getDay();
-
-        if (diaSemana < 1 || diaSemana > 5) {
-          alert("Só é possível agendar de segunda a sexta!");
-          return;
-        }
-
         const mensagem = `Olá, gostaria de agendar um horário na sala de informática.
 
 Motivo: ${motivo}
 
-${dia} de ${mes} às ${horario}, tem disponível?`;
+Data: ${data}
+Horário: ${horario}`;
 
         const telefone = "5588992358152";
         const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
