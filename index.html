@@ -75,10 +75,7 @@
         border: none;
         margin-bottom: 12px;
         font-size: 14px;
-      }
-
-      select:disabled {
-        opacity: 0.6;
+        outline: none;
       }
 
       label {
@@ -89,11 +86,11 @@
         opacity: 0.8;
       }
 
-      /* DATA BONITA */
       #dataFormatada {
         font-size: 14px;
         margin-top: -8px;
         margin-bottom: 12px;
+        min-height: 18px;
         opacity: 0.85;
       }
 
@@ -155,13 +152,10 @@
       </p>
 
       <label>Descreva o motivo</label>
-      <textarea 
-        id="motivo" 
-        placeholder="Descreva o motivo do agendamento..."
-      ></textarea>
+      <textarea id="motivo" placeholder="Descreva o motivo..."></textarea>
 
       <label>Escolha o dia</label>
-      <input type="date" id="data" onchange="atualizarData()" />
+      <input type="date" id="data" oninput="verificarData()" />
 
       <div id="dataFormatada"></div>
 
@@ -195,6 +189,14 @@
     </footer>
 
     <script>
+      function verificarData() {
+        const data = document.getElementById("data").value;
+
+        if (data.length === 10) {
+          atualizarData();
+        }
+      }
+
       function atualizarData() {
         const data = document.getElementById("data").value;
         const select = document.getElementById("horario");
@@ -215,19 +217,28 @@
           "julho","agosto","setembro","outubro","novembro","dezembro"
         ];
 
-        const d = new Date(data);
+        // ✅ CORREÇÃO DEFINITIVA DO BUG DE DATA
+        const [ano, mes, dia] = data.split("-");
+        const d = new Date(Number(ano), Number(mes) - 1, Number(dia));
 
         if (d.getDay() === 0 || d.getDay() === 6) {
-          alert("Só funciona de segunda a sexta!");
-          texto.textContent = "";
+          texto.textContent = "Selecione um dia útil (segunda a sexta)";
+          texto.style.color = "#f87171";
+
+          document.getElementById("horario").innerHTML =
+            "<option>Dia inválido</option>";
+
+          document.getElementById("horario").disabled = true;
           return;
+        } else {
+          texto.style.color = "#ffffff";
         }
 
-        const dia = String(d.getDate()).padStart(2, "0");
-        const mes = meses[d.getMonth()];
+        const diaFormatado = String(d.getDate()).padStart(2, "0");
+        const mesNome = meses[d.getMonth()];
         const semana = diasSemana[d.getDay()];
 
-        texto.textContent = `${dia} de ${mes}, ${semana}`;
+        texto.textContent = `${diaFormatado} de ${mesNome}, ${semana}`;
 
         let horarios = [];
 
