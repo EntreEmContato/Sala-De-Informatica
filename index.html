@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="pt-br">
   <head>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz@0,14..32;1,14..32&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
 
@@ -24,15 +24,14 @@
         --bg-gradient: linear-gradient(
           180deg,
           #1e3a8a 0%,
-          #1e40af 35%,
-          #0f172a 75%,
-          #000000 100%
+          #1e40af 40%,
+          #020617 100%
         );
       }
 
       body {
         background: var(--bg-gradient) no-repeat center/cover;
-        height: 100vh;
+        min-height: 100vh;
         font-family: "Inter", sans-serif;
         color: var(--text-color);
         display: flex;
@@ -42,32 +41,45 @@
       #container {
         width: 100%;
         max-width: 500px;
-        margin: 40px auto;
+        margin: 50px auto 20px;
         padding: 20px;
         text-align: center;
       }
 
       #title {
-        font-size: 30px;
+        font-size: 32px;
         font-weight: 700;
+        letter-spacing: -0.5px;
+        margin-bottom: 6px;
       }
 
       #subtitle {
-        font-size: 16px;
-        margin-bottom: 20px;
-        opacity: 0.85;
+        font-size: 14px;
+        opacity: 0.7;
+        margin-bottom: 25px;
       }
 
       #profile img {
-        width: 150px;
-        margin: 20px auto;
+        width: 140px;
+        margin: 10px auto 20px;
         display: block;
       }
 
+      /* 🔥 VOLTOU PRO TEXTO ORIGINAL */
       #instrucao {
         margin-bottom: 12px;
         font-size: 14px;
-        opacity: 0.9;
+        opacity: 0.85;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 16px;
+        border-radius: 12px;
+        border: none;
+        margin-bottom: 12px;
+        font-size: 14px;
+        resize: none;
       }
 
       input {
@@ -90,12 +102,22 @@
         background: linear-gradient(135deg, #2563eb, #3b82f6);
         color: white;
         cursor: pointer;
-        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
         transition: all 0.25s ease;
       }
 
       button:hover {
-        transform: scale(1.05);
+        transform: scale(1.03);
+      }
+
+      #horarios {
+        font-size: 13px;
+        margin-top: 20px;
+        padding: 14px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        line-height: 1.5;
       }
 
       footer {
@@ -103,7 +125,7 @@
         text-align: center;
         padding: 20px;
         font-size: 12px;
-        color: #ffffff;
+        opacity: 0.7;
       }
 
       footer a {
@@ -117,15 +139,20 @@
     <div id="container">
 
       <h1 id="title">Sala de Informática</h1>
-      <h2 id="subtitle">Agende seu horário</h2>
+      <h2 id="subtitle">Agendamento rápido</h2>
 
       <div id="profile">
         <img src="./assets/imagem_cortada_circular (5).png" />
       </div>
 
       <p id="instrucao">
-        Escolha o dia, o horário e aperte em "Agendar horário"
+        Explique o motivo, escolha o dia e o horário e aperte em "Agendar horário"
       </p>
+
+      <textarea 
+        id="motivo" 
+        placeholder="Descreva o motivo do agendamento..."
+      ></textarea>
 
       <input type="date" id="data" />
       <input type="time" id="horario" />
@@ -133,6 +160,17 @@
       <button onclick="enviarWhatsApp()">
         Agendar horário
       </button>
+
+      <div id="horarios">
+        <strong>⚠️ Atenção</strong><br>
+        Horários disponíveis:<br><br>
+
+        Segunda a quinta:<br>
+        08:30–10:00 / 14:00–15:30<br><br>
+
+        Sexta:<br>
+        08:30–09:30
+      </div>
 
     </div>
 
@@ -145,11 +183,12 @@
 
     <script>
       function enviarWhatsApp() {
+        const motivo = document.getElementById("motivo").value;
         const data = document.getElementById("data").value;
         const horario = document.getElementById("horario").value;
 
-        if (!data || !horario) {
-          alert("Escolha o dia e o horário!");
+        if (!motivo || !data || !horario) {
+          alert("Preencha o motivo, o dia e o horário!");
           return;
         }
 
@@ -166,32 +205,22 @@
         const dataObj = new Date(ano, mesNumero - 1, dia);
         const diaSemana = dataObj.getDay();
 
-        // AGORA VAI DE SEGUNDA (1) ATÉ SEXTA (5)
         if (diaSemana < 1 || diaSemana > 5) {
           alert("Só é possível agendar de segunda a sexta!");
           return;
         }
 
-        const mensagem = `Olá, gostaria de agendar um horário na sala de informática.\n${dia} de ${mes} às ${horario}, tem disponível?`;
+        const mensagem = `Olá, gostaria de agendar um horário na sala de informática.
+
+Motivo: ${motivo}
+
+${dia} de ${mes} às ${horario}, tem disponível?`;
 
         const telefone = "5588992358152";
         const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
 
         window.open(url, "_blank");
       }
-
-      window.addEventListener("load", () => {
-        const container = document.getElementById("container");
-
-        container.style.opacity = "0";
-        container.style.transform = "translateY(20px)";
-
-        setTimeout(() => {
-          container.style.transition = "all 0.6s ease";
-          container.style.opacity = "1";
-          container.style.transform = "translateY(0)";
-        }, 100);
-      });
     </script>
   </body>
 </html>
