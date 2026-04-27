@@ -127,8 +127,6 @@
         min-height: 18px;
       }
 
-      /* --- ESTILO DOS BOTÕES ATUALIZADO --- */
-
       button {
         width: 100%;
         padding: 18px;
@@ -140,67 +138,28 @@
         cursor: pointer;
         position: relative;
         overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animação de entrada suave */
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         text-transform: uppercase;
         letter-spacing: 1px;
         margin-bottom: 15px;
         background-size: 200% auto;
       }
 
-      /* Botão Agendar (Azul Oceano) */
       button:first-of-type {
         background-image: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #2563eb 100%);
         box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
       }
 
-      /* Botão Regras (Roxo Violeta) */
+      /* ALTERADO AQUI */
       #btn-regras {
-        background-image: linear-gradient(135deg, #7c3aed 0%, #6d28d9 50%, #7c3aed 100%);
-        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-      }
-
-      /* Efeito de Reflexo Interno */
-      button::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          120deg,
-          transparent,
-          rgba(255, 255, 255, 0.15),
-          transparent
-        );
-        transition: all 0.6s;
+        background-image: linear-gradient(135deg, #0b1220 0%, #1e3a8a 100%);
+        box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
       }
 
       button:hover {
-        transform: translateY(-5px); /* Sobe um pouco */
+        transform: translateY(-5px);
         filter: brightness(1.1);
-        background-position: right center; /* Muda o gradiente */
       }
-
-      /* Quando passa o mouse, o reflexo atravessa o botão */
-      button:hover::before {
-        left: 100%;
-      }
-
-      /* Sombras específicas no Hover */
-      button:first-of-type:hover {
-        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.5);
-      }
-
-      #btn-regras:hover {
-        box-shadow: 0 10px 25px rgba(124, 58, 237, 0.5);
-      }
-
-      button:active {
-        transform: translateY(0); /* Volta ao normal ao clicar */
-      }
-
-      /* --- FIM DO ESTILO DOS BOTÕES --- */
 
       #horarios {
         font-size: 13px;
@@ -213,7 +172,7 @@
       }
 
       .modal {
-        display: none; 
+        display: none;
         position: fixed;
         z-index: 1000;
         left: 0;
@@ -235,11 +194,6 @@
         overflow-y: auto;
         text-align: left;
         border: 1px solid rgba(255,255,255,0.1);
-      }
-
-      .modal-content h3 {
-        margin-bottom: 15px;
-        color: #fbbf24;
       }
 
       .close-btn {
@@ -332,34 +286,54 @@
     </footer>
 
     <script>
-      function abrirRegras() { document.getElementById("modalRegras").style.display = "block"; }
-      function fecharRegras() { document.getElementById("modalRegras").style.display = "none"; }
-      window.onclick = function(event) {
-        if (event.target == document.getElementById("modalRegras")) fecharRegras();
+      function abrirRegras() {
+        document.getElementById("modalRegras").style.display = "block";
       }
+
+      function fecharRegras() {
+        document.getElementById("modalRegras").style.display = "none";
+      }
+
+      window.onclick = function(event) {
+        if (event.target == document.getElementById("modalRegras")) {
+          fecharRegras();
+        }
+      };
+
+      const meses = [
+        "janeiro","fevereiro","março","abril","maio","junho",
+        "julho","agosto","setembro","outubro","novembro","dezembro"
+      ];
+
+      const diasSemana = [
+        "domingo","segunda-feira","terça-feira","quarta-feira",
+        "quinta-feira","sexta-feira","sábado"
+      ];
 
       function atualizarData() {
         const dataInput = document.getElementById("data").value;
         const select = document.getElementById("horario");
         const texto = document.getElementById("dataFormatada");
-        select.innerHTML = '<option value="">Selecione um horário</option>';
+
+        select.innerHTML = '<option>Escolha o dia primeiro</option>';
+
         if (!dataInput) return;
+
         const [ano, mes, dia] = dataInput.split("-");
         const d = new Date(Number(ano), Number(mes) - 1, Number(dia));
-        if (d.getDay() === 0 || d.getDay() === 6) {
-          texto.textContent = "Selecione um dia útil";
-          texto.style.color = "#f87171";
-          select.disabled = true;
-          return;
-        }
-        texto.textContent = `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth()+1).padStart(2, "0")}`;
-        texto.style.color = "white";
-        let h = (d.getDay() >= 1 && d.getDay() <= 4) ? ["08:30","09:00","09:30","10:00","14:00","14:30","15:00","15:30"] : ["08:30","09:00","09:30"];
+
+        texto.textContent = `${dia} de ${meses[d.getMonth()]}, ${diasSemana[d.getDay()]}`;
+
+        let h = (d.getDay() >= 1 && d.getDay() <= 4)
+          ? ["08:30","09:00","09:30","10:00","14:00","14:30","15:00","15:30"]
+          : ["08:30","09:00","09:30"];
+
         h.forEach(hr => {
           let opt = document.createElement("option");
           opt.value = opt.textContent = hr;
           select.appendChild(opt);
         });
+
         select.disabled = false;
       }
 
@@ -367,8 +341,19 @@
         const m = document.getElementById("motivo").value;
         const d = document.getElementById("data").value;
         const h = document.getElementById("horario").value;
+
         if (!m || !d || !h) return alert("Preencha tudo!");
-        const url = `https://wa.me/5588992358152?text=${encodeURIComponent(`Agendamento:\nMotivo: ${m}\nData: ${d}\nHorário: ${h}`)}`;
+
+        const [ano, mes, dia] = d.split("-");
+        const dataObj = new Date(ano, mes - 1, dia);
+
+        const msg = `Agendamento:
+Motivo: ${m}
+Data: ${dia} de ${meses[dataObj.getMonth()]}
+Dia da semana: ${diasSemana[dataObj.getDay()]}
+Horário: ${h}`;
+
+        const url = `https://wa.me/5588992358152?text=${encodeURIComponent(msg)}`;
         window.open(url, "_blank");
       }
     </script>
