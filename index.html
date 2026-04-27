@@ -9,67 +9,189 @@
     />
 
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sala de Informática</title>
-    <link rel="stylesheet" href="./style.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --text-color: #ffffff;
+        --bg-gradient: linear-gradient(
+          180deg,
+          #1e3a8a 0%,
+          #1e40af 35%,
+          #0f172a 75%,
+          #000000 100%
+        );
+      }
+
+      body {
+        background: var(--bg-gradient) no-repeat center/cover;
+        height: 100vh;
+        font-family: "Inter", sans-serif;
+        color: var(--text-color);
+        display: flex;
+        flex-direction: column;
+      }
+
+      #container {
+        width: 100%;
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 20px;
+        text-align: center;
+      }
+
+      #title {
+        font-size: 30px;
+        font-weight: 700;
+      }
+
+      #subtitle {
+        font-size: 16px;
+        margin-bottom: 20px;
+        opacity: 0.85;
+      }
+
+      #profile img {
+        width: 150px;
+        margin: 20px auto;
+        display: block;
+      }
+
+      #instrucao {
+        margin-bottom: 12px;
+        font-size: 14px;
+        opacity: 0.9;
+      }
+
+      input {
+        width: 100%;
+        padding: 16px;
+        border-radius: 12px;
+        border: none;
+        margin-bottom: 12px;
+        font-size: 16px;
+        text-align: center;
+      }
+
+      button {
+        width: 100%;
+        padding: 18px;
+        border-radius: 14px;
+        border: none;
+        font-weight: 600;
+        font-size: 16px;
+        background: linear-gradient(135deg, #2563eb, #3b82f6);
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        transition: all 0.25s ease;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+      }
+
+      footer {
+        margin-top: auto;
+        text-align: center;
+        padding: 20px;
+        font-size: 12px;
+        color: #ffffff;
+      }
+
+      footer a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+    </style>
   </head>
 
   <body>
     <div id="container">
 
-      <!-- TÍTULO -->
       <h1 id="title">Sala de Informática</h1>
       <h2 id="subtitle">Agende seu horário</h2>
 
-      <!-- LOGO -->
       <div id="profile">
-        <img 
-          src="./assets/imagem_cortada_circular (5).png"
-          alt="Logo da Sala de Informática"
-        />
-      </div>
-        
-      <!-- BOTÃO PRINCIPAL -->
-      <ul>
-        <li>
-          <a
-            href="https://wa.me/5588992358152?text=Ol%C3%A1,%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%20na%20sala%20de%20inform%C3%A1tica.%20Quais%20hor%C3%A1rios%20est%C3%A3o%20dispon%C3%ADveis%3F"
-            target="_blank"
-          >
-            Agende seu horário agora
-          </a>
-        </li>
-      </ul>
-
-      <!-- ÍCONE WHATSAPP -->
-      <div id="social-links">
-        <a 
-          href="https://wa.me/5588992358152?text=Ol%C3%A1,%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%20na%20sala%20de%20inform%C3%A1tica.%20Quais%20hor%C3%A1rios%20est%C3%A3o%20dispon%C3%ADveis%3F" 
-          target="_blank"
-        >
-          <ion-icon name="logo-whatsapp"></ion-icon>
-        </a>
+        <img src="./assets/imagem_cortada_circular (5).png" />
       </div>
 
-      <!-- RODAPÉ -->
-      <footer>
-        Feito por 
-        <a href="https://www.instagram.com/gustavot_orres/" target="_blank">
-          @Gustavot_orres
-        </a>
-      </footer>
+      <p id="instrucao">
+        Escolha o dia, o horário e aperte em "Agendar horário"
+      </p>
+
+      <input type="date" id="data" />
+      <input type="time" id="horario" />
+
+      <button onclick="enviarWhatsApp()">
+        Agendar horário
+      </button>
+
     </div>
-  
-    <!-- Ícones -->
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
 
+    <footer>
+      Feito por 
+      <a href="https://www.instagram.com/gustavot_orres/" target="_blank">
+        @gustavot_orres
+      </a>
+    </footer>
+
+    <script>
+      function enviarWhatsApp() {
+        const data = document.getElementById("data").value;
+        const horario = document.getElementById("horario").value;
+
+        if (!data || !horario) {
+          alert("Escolha o dia e o horário!");
+          return;
+        }
+
+        const [ano, mesNumero, dia] = data.split("-");
+
+        const meses = [
+          "janeiro", "fevereiro", "março", "abril",
+          "maio", "junho", "julho", "agosto",
+          "setembro", "outubro", "novembro", "dezembro"
+        ];
+
+        const mes = meses[parseInt(mesNumero) - 1];
+
+        const dataObj = new Date(ano, mesNumero - 1, dia);
+        const diaSemana = dataObj.getDay();
+
+        // AGORA VAI DE SEGUNDA (1) ATÉ SEXTA (5)
+        if (diaSemana < 1 || diaSemana > 5) {
+          alert("Só é possível agendar de segunda a sexta!");
+          return;
+        }
+
+        const mensagem = `Olá, gostaria de agendar um horário na sala de informática.\n${dia} de ${mes} às ${horario}, tem disponível?`;
+
+        const telefone = "5588992358152";
+        const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+
+        window.open(url, "_blank");
+      }
+
+      window.addEventListener("load", () => {
+        const container = document.getElementById("container");
+
+        container.style.opacity = "0";
+        container.style.transform = "translateY(20px)";
+
+        setTimeout(() => {
+          container.style.transition = "all 0.6s ease";
+          container.style.opacity = "1";
+          container.style.transform = "translateY(0)";
+        }, 100);
+      });
+    </script>
   </body>
 </html>
