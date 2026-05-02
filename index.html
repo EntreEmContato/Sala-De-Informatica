@@ -98,12 +98,29 @@
       #horarios-info {
         font-size: 13px;
         margin-top: 20px;
-        padding: 14px;
-        border-radius: 10px;
+        padding: 16px;
+        border-radius: 12px;
         background: rgba(255,255,255,0.06);
         border: 1px solid rgba(255,255,255,0.1);
-        line-height: 1.5;
+        text-align: left;
       }
+
+      .horarios-titulo {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 700;
+        text-align: center;
+        color: #60a5fa;
+      }
+
+      .horario-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+
+      .horario-row:last-child { border-bottom: none; }
 
       .modal {
         display: none;
@@ -144,7 +161,7 @@
         <div></div>
       </div>
 
-      <div id="instrucao">
+      <div id="instrucao" style="margin-bottom: 15px;">
         <span>Preencha os dados e clique em</span>
         <strong>"Agendar horário"</strong>
       </div>
@@ -214,9 +231,20 @@
       <button id="btn-regras" onclick="abrirRegras()">Regras da sala - clique aqui</button>
 
       <div id="horarios-info">
-        <strong>Atenção aos blocos disponíveis:</strong><br>
-        Seg a Qui: 08:30 às 10:00 e 14:30 às 15:30<br>
-        Sex: 08:30 às 09:30
+        <span class="horarios-titulo">Atenção aos horários disponíveis:</span>
+        
+        <div class="horario-row">
+          <span>Segunda a Quinta (Manhã)</span>
+          <strong>08:30 às 10:00</strong>
+        </div>
+        <div class="horario-row">
+          <span>Segunda a Quinta (Tarde)</span>
+          <strong>14:30 às 15:30</strong>
+        </div>
+        <div class="horario-row">
+          <span>Sexta-feira (Manhã)</span>
+          <strong>08:30 às 09:30</strong>
+        </div>
       </div>
     </div>
 
@@ -247,7 +275,6 @@
           const partes = dataInput.split('-');
           const data = new Date(partes[0], partes[1] - 1, partes[2]);
           let formatada = data.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
-          // Capitalizar a primeira letra do dia da semana
           dataFormatadaDiv.textContent = formatada.charAt(0).toUpperCase() + formatada.slice(1);
         }
       }
@@ -256,10 +283,8 @@
         let slots = [];
         let atual = new Date();
         atual.setHours(inicioH, inicioM, 0);
-        
         let fim = new Date();
         fim.setHours(fimH, fimM, 0);
-
         while (atual <= fim) {
           let h = String(atual.getHours()).padStart(2, '0');
           let m = String(atual.getMinutes()).padStart(2, '0');
@@ -273,23 +298,18 @@
         const dataInput = document.getElementById("data").value;
         const selectHorario = document.getElementById("horario");
         selectHorario.innerHTML = "";
-
         if (!dataInput) return;
-
         const partes = dataInput.split('-');
         const data = new Date(partes[0], partes[1] - 1, partes[2]);
         const diaSemana = data.getDay();
-
         let horarios = [];
-
-        if (diaSemana >= 1 && diaSemana <= 4) { // Seg a Qui
+        if (diaSemana >= 1 && diaSemana <= 4) { 
           horarios = [...gerarSlots(8, 30, 10, 0), ...gerarSlots(14, 30, 15, 30)];
-        } else if (diaSemana === 5) { // Sex
+        } else if (diaSemana === 5) { 
           horarios = gerarSlots(8, 30, 9, 30);
         } else {
           horarios = ["Indisponível no fim de semana"];
         }
-
         horarios.forEach(hora => {
           let el = document.createElement("option");
           el.value = el.textContent = hora;
@@ -314,17 +334,16 @@
         const ferramentasVal = pegar("ferramentas");
         const metodologiaVal = pegar("metodologia");
 
-        if(!dataVal || !horaVal || horaVal.includes("Indisponível") || !professoraVal || !componentaVal || !turmaVal || !turnoVal) {
+        if(!dataVal || !horaVal || horaVal.includes("Indisponível") || !professoraVal || !componenteVal || !turmaVal || !turnoVal) {
           alert("Por favor, preencha todos os campos obrigatórios e selecione uma data e horário válidos.");
           return;
         }
 
-        // Criando a mensagem com quebras de linha e espaços
         const msg = `Olá, gostaria de solicitar o agendamento da Sala de Informática.
 
 Nome da Professora: ${professoraVal}
 
-Componente Curricular: ${componentaVal}
+Componente Curricular: ${componenteVal}
 
 Turma: ${turmaVal}
 
@@ -344,7 +363,6 @@ Objetivo da aula: ${document.getElementById("objetivo").value}
 
 Observações: ${document.getElementById("observacoes").value}`;
 
-        // Enviar para o WhatsApp
         window.open(`https://wa.me/5588992358152?text=${encodeURIComponent(msg)}`);
       }
     </script>
