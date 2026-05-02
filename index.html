@@ -3,10 +3,7 @@
   <head>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,12 +14,7 @@
 
       :root {
         --text-color: #ffffff;
-        --bg-gradient: linear-gradient(
-          180deg,
-          #1e3a8a 0%,
-          #1e40af 40%,
-          #020617 100%
-        );
+        --bg-gradient: linear-gradient(180deg,#1e3a8a 0%,#1e40af 40%,#020617 100%);
       }
 
       body {
@@ -42,39 +34,20 @@
         text-align: center;
       }
 
-      #title {
-        font-size: 32px;
-        font-weight: 700;
-        margin-bottom: 6px;
-      }
-
-      #subtitle {
-        font-size: 14px;
-        opacity: 0.7;
-        margin-bottom: 25px;
-      }
+      #title { font-size: 32px; font-weight: 700; margin-bottom: 6px; }
+      #subtitle { font-size: 14px; opacity: 0.7; margin-bottom: 25px; }
 
       #profile img {
-        width: 140px;
+        width: 180px;
+        height: auto;
         margin: 10px auto 20px;
         display: block;
+        object-fit: contain;
       }
 
-      #separador {
-        margin: 18px 0;
-        text-align: center;
-      }
-
-      #separador div {
-        height: 1px;
-        background: rgba(255,255,255,0.15);
-        margin: 10px 0;
-      }
-
-      #separador span {
-        font-size: 12px;
-        opacity: 0.7;
-      }
+      #separador { margin: 18px 0; text-align: center; }
+      #separador div { height: 1px; background: rgba(255,255,255,0.15); margin: 10px 0; }
+      #separador span { font-size: 12px; opacity: 0.7; }
 
       #instrucao {
         display: flex;
@@ -87,10 +60,7 @@
         text-align: center;
       }
 
-      #instrucao strong {
-        white-space: nowrap;
-        color: #ffffff;
-      }
+      #instrucao strong { white-space: nowrap; color: #ffffff; }
 
       #alerta-regras {
         margin-bottom: 12px;
@@ -99,7 +69,7 @@
         color: #fbbf24;
       }
 
-      textarea, input, select {
+      textarea, input:not([type="checkbox"]), select {
         width: 100%;
         padding: 16px;
         border-radius: 12px;
@@ -109,6 +79,12 @@
         outline: none;
         background: #ffffff;
         color: #000;
+      }
+
+      input[type="checkbox"] {
+        width: auto;
+        margin: 0;
+        cursor: pointer;
       }
 
       label {
@@ -138,27 +114,13 @@
         cursor: pointer;
         position: relative;
         overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        transition: all 0.4s;
         margin-bottom: 15px;
-        background-size: 200% auto;
-      }
-
-      button:first-of-type {
         background-image: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #2563eb 100%);
-        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
       }
 
-      /* ALTERADO AQUI */
       #btn-regras {
         background-image: linear-gradient(135deg, #0b1220 0%, #1e3a8a 100%);
-        box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
-      }
-
-      button:hover {
-        transform: translateY(-5px);
-        filter: brightness(1.1);
       }
 
       #horarios {
@@ -166,8 +128,8 @@
         margin-top: 20px;
         padding: 14px;
         border-radius: 10px;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.1);
         line-height: 1.5;
       }
 
@@ -201,16 +163,6 @@
         box-shadow: none !important;
         margin-top: 15px;
       }
-
-      footer {
-        margin-top: auto;
-        text-align: center;
-        padding: 20px;
-        font-size: 12px;
-        opacity: 0.7;
-      }
-
-      footer a { color: #ffffff; text-decoration: none; }
     </style>
   </head>
 
@@ -220,34 +172,96 @@
       <h2 id="subtitle">Agendamento rápido</h2>
 
       <div id="profile">
-        <img src="./assets/imagem_cortada_circular (5).png" alt="Perfil" />
+        <img src="./assets/LOGOMARCA VERTICAL - OFICIAL.png" alt="Logomarca Oficial" />
       </div>
 
       <div id="separador">
         <div></div>
-        <span>⬇️ Agendamento da sala abaixo</span>
+        <span>Agendamento da sala abaixo</span>
         <div></div>
       </div>
 
       <div id="instrucao">
-        <span>Explique o motivo, escolha o dia e o horário e aperte em</span>
+        <span>Preencha os dados e clique em</span>
         <strong>"Agendar horário"</strong>
       </div>
 
-      <p id="alerta-regras">⚠️ Atenção às regras da sala de informática</p>
+      <p id="alerta-regras">Atenção às regras da sala de informática</p>
 
-      <label for="motivo">Descreva o motivo</label>
-      <textarea id="motivo" placeholder="Ex: Aula de pesquisa..."></textarea>
+      <label>Nome da Professora</label>
+      <input id="professora">
 
-      <label for="data">Escolha o dia</label>
-      <input type="date" id="data" onchange="atualizarData()" />
+      <label>Componente Curricular</label>
+      <input id="componente">
+
+      <label>Turma</label>
+      <select id="turma">
+        <option></option>
+        <option>Creche A</option>
+        <option>Creche B</option>
+        <option>Pré Escola A</option>
+        <option>Pré Escola B</option>
+        <option>Pré Escola C</option>
+      </select>
+
+      <label>Turno</label>
+      <select id="turno">
+        <option></option>
+        <option>Manhã</option>
+        <option>Tarde</option>
+      </select>
+
+      <label>Quantidade de alunos</label>
+      <input type="number" id="quantidade">
+
+      <label>Quais ferramentas serão utilizadas?</label>
+      <div style="background: rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+        <label style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" name="ferramentas" value="Computadores">Computadores
+        </label>
+        <label style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" name="ferramentas" value="TV">TV
+        </label>
+        <label style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" name="ferramentas" value="Notebook Pessoal">Notebook Pessoal
+        </label>
+        <label style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" name="ferramentas" value="Pendrive">Pendrive
+        </label>
+      </div>
+
+      <label>Qual metodologia será aplicada?</label>
+      <div style="background: rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
+        <label style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" name="metodologia" value="Aula/Explicação">Aula/Explicação
+        </label>
+        <label style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" name="metodologia" value="Ensaiar para apresentação">Ensaiar para apresentação
+        </label>
+        <label style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" name="metodologia" value="Jogos pedagógicos">Jogos pedagógicos
+        </label>
+        <label style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" name="metodologia" value="Leitura">Leitura
+        </label>
+        <label style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" name="metodologia" value="Aula de pesquisa">Aula de pesquisa
+        </label>
+      </div>
+
+      <label>Objetivo da aula (Opcional)</label>
+      <textarea id="objetivo"></textarea>
+
+      <label>Observações (Opcional)</label>
+      <textarea id="observacoes"></textarea>
+
+      <label>Escolha o dia</label>
+      <input type="date" id="data" onchange="atualizarData(); atualizarDataFormatada()">
 
       <div id="dataFormatada"></div>
 
-      <label for="horario">Escolha o horário</label>
-      <select id="horario" disabled>
-        <option>Escolha o dia primeiro</option>
-      </select>
+      <label>Escolha o horário</label>
+      <select id="horario"></select>
 
       <button onclick="enviarWhatsApp()">Agendar horário</button>
 
@@ -256,9 +270,9 @@
       </button>
 
       <div id="horarios">
-        <strong>⚠️ Atenção</strong><br><br>
+        <strong>Atenção</strong><br><br>
         Segunda a quinta:<br>
-        08:30–10:00 / 14:00–15:30<br><br>
+        08:30–10:00 / 14:30–15:30<br><br>
         Sexta:<br>
         08:30–09:30
       </div>
@@ -267,94 +281,104 @@
     <div id="modalRegras" class="modal">
       <div class="modal-content">
         <h3>Regras de Uso</h3>
-        <ol style="color: white; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-          <li><strong>Agendamento obrigatório:</strong> Deve ser organizado previamente.</li>
-          <li><strong>Responsabilidade:</strong> Mantenha a organização.</li>
-          <li><strong>Supervisão:</strong> Nenhuma turma sem responsável.</li>
-          <li><strong>Permanência:</strong> Apenas para fins pedagógicos.</li>
-          <li><strong>Alimentos:</strong> Proibido comer ou beber na sala.</li>
-          <li><strong>Materiais:</strong> Não retire equipamentos sem permissão.</li>
-          <li><strong>Configurações:</strong> Não altere o sistema dos PCs.</li>
-          <li><strong>Organização:</strong> Desligue tudo e organize as cadeiras ao sair.</li>
+        <ol style="padding-left:20px; font-size:14px; line-height:1.6; color: rgba(255,255,255,0.9);">
+          <li><strong>Agendamento obrigatório</strong></li>
+          <li><strong>Responsabilidade pelo espaço</strong></li>
+          <li><strong>Supervisão constante</strong></li>
+          <li><strong>Permanência na sala</strong></li>
+          <li><strong>Proibição de alimentos e bebidas</strong></li>
+          <li><strong>Retirada de materiais</strong></li>
+          <li><strong>Não alterar configurações</strong></li>
+          <li><strong>Organização ao sair</strong></li>
+          <li><strong>Respeito ao planejamento pedagógico</strong></li>
+          <li><strong>Uso consciente do tempo</strong></li>
         </ol>
-        <button class="close-btn" onclick="fecharRegras()">Fechar Regras</button>
+        <button class="close-btn" onclick="fecharRegras()">Fechar</button>
       </div>
     </div>
 
-    <footer>
-      Feito por <a href="https://www.instagram.com/gustavot_orres/" target="_blank">@gustavot_orres</a>
-    </footer>
-
     <script>
-      function abrirRegras() {
-        document.getElementById("modalRegras").style.display = "block";
-      }
+      function abrirRegras(){document.getElementById("modalRegras").style.display="block";}
+      function fecharRegras(){document.getElementById("modalRegras").style.display="none";}
 
-      function fecharRegras() {
-        document.getElementById("modalRegras").style.display = "none";
-      }
-
-      window.onclick = function(event) {
-        if (event.target == document.getElementById("modalRegras")) {
-          fecharRegras();
-        }
-      };
-
-      const meses = [
-        "janeiro","fevereiro","março","abril","maio","junho",
-        "julho","agosto","setembro","outubro","novembro","dezembro"
-      ];
-
-      const diasSemana = [
-        "domingo","segunda-feira","terça-feira","quarta-feira",
-        "quinta-feira","sexta-feira","sábado"
-      ];
-
-      function atualizarData() {
+      function atualizarDataFormatada() {
         const dataInput = document.getElementById("data").value;
-        const select = document.getElementById("horario");
-        const texto = document.getElementById("dataFormatada");
+        const dataFormatadaDiv = document.getElementById("dataFormatada");
+        if (dataInput) {
+          const partes = dataInput.split('-');
+          const data = new Date(partes[0], partes[1] - 1, partes[2]);
+          const opcoesData = { day: 'numeric', month: 'long' };
+          const opcoesDiaSemana = { weekday: 'long' };
+          const dataPorExtenso = data.toLocaleDateString('pt-BR', opcoesData);
+          const diaSemana = data.toLocaleDateString('pt-BR', opcoesDiaSemana);
+          dataFormatadaDiv.textContent = `${dataPorExtenso}, ${diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1)}`;
+        } else {
+          dataFormatadaDiv.textContent = "";
+        }
+      }
 
-        select.innerHTML = '<option>Escolha o dia primeiro</option>';
-
-        if (!dataInput) return;
-
-        const [ano, mes, dia] = dataInput.split("-");
-        const d = new Date(Number(ano), Number(mes) - 1, Number(dia));
-
-        texto.textContent = `${dia} de ${meses[d.getMonth()]}, ${diasSemana[d.getDay()]}`;
-
-        let h = (d.getDay() >= 1 && d.getDay() <= 4)
-          ? ["08:30","09:00","09:30","10:00","14:00","14:30","15:00","15:30"]
-          : ["08:30","09:00","09:30"];
-
-        h.forEach(hr => {
-          let opt = document.createElement("option");
-          opt.value = opt.textContent = hr;
+      function atualizarData(){
+        const data=document.getElementById("data").value;
+        const select=document.getElementById("horario");
+        select.innerHTML="";
+        if(!data)return;
+        const partes = data.split('-');
+        const d = new Date(partes[0], partes[1] - 1, partes[2]);
+        let h=(d.getDay()>=1&&d.getDay()<=4)?
+        ["08:30","09:00","09:30","10:00","14:30","15:00","15:30"]:
+        ["08:30","09:00","09:30"];
+        h.forEach(hr=>{
+          let opt=document.createElement("option");
+          opt.value=opt.textContent=hr;
           select.appendChild(opt);
         });
-
-        select.disabled = false;
       }
 
-      function enviarWhatsApp() {
-        const m = document.getElementById("motivo").value;
-        const d = document.getElementById("data").value;
-        const h = document.getElementById("horario").value;
+      function pegar(nome){
+        let arr=[];
+        document.querySelectorAll(`input[name="${nome}"]:checked`)
+        .forEach(e=>arr.push(e.value));
+        return arr.join(", ");
+      }
 
-        if (!m || !d || !h) return alert("Preencha tudo!");
+      function enviarWhatsApp(){
+        const dataInput = document.getElementById("data").value;
+        let dataFormatadaParaWhatsApp = "";
+        if (dataInput) {
+          const partes = dataInput.split('-');
+          const data = new Date(partes[0], partes[1] - 1, partes[2]);
+          const opcoesData = { day: 'numeric', month: 'long' };
+          const opcoesDiaSemana = { weekday: 'long' };
+          const dataPorExtenso = data.toLocaleDateString('pt-BR', opcoesData);
+          const diaSemana = data.toLocaleDateString('pt-BR', opcoesDiaSemana);
+          dataFormatadaParaWhatsApp = `${dataPorExtenso}, ${diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1)}`;
+        }
 
-        const [ano, mes, dia] = d.split("-");
-        const dataObj = new Date(ano, mes - 1, dia);
+        const msg=`Olá, gostaria de agendar um horário para utilizar a Sala de Informática, poderia olhar se esse está disponível?
 
-        const msg = `Agendamento:
-Motivo: ${m}
-Data: ${dia} de ${meses[dataObj.getMonth()]}
-Dia da semana: ${diasSemana[dataObj.getDay()]}
-Horário: ${h}`;
+Data: ${dataFormatadaParaWhatsApp}
 
-        const url = `https://wa.me/5588992358152?text=${encodeURIComponent(msg)}`;
-        window.open(url, "_blank");
+Horário: ${horario.value}
+
+Professora: ${professora.value}
+
+Componente: ${componente.value}
+
+Turma: ${turma.value}
+
+Turno: ${turno.value}
+
+Alunos: ${quantidade.value}
+
+Ferramentas: ${pegar("ferramentas")}
+
+Metodologia: ${pegar("metodologia")}
+
+Objetivo: ${objetivo.value}
+
+Observações: ${observacoes.value}`;
+
+        window.open(`https://wa.me/5588992358152?text=${encodeURIComponent(msg)}`);
       }
     </script>
   </body>
