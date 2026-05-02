@@ -49,26 +49,6 @@
       #separador div { height: 1px; background: rgba(255,255,255,0.15); margin: 10px 0; }
       #separador span { font-size: 12px; opacity: 0.7; }
 
-      #instrucao {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 5px;
-        margin-bottom: 12px;
-        font-size: 14px;
-        opacity: 0.85;
-        text-align: center;
-      }
-
-      #instrucao strong { white-space: nowrap; color: #ffffff; }
-
-      #alerta-regras {
-        margin-bottom: 12px;
-        font-size: 12px;
-        opacity: 0.7;
-        color: #fbbf24;
-      }
-
       textarea, input:not([type="checkbox"]), select {
         width: 100%;
         padding: 16px;
@@ -81,11 +61,7 @@
         color: #000;
       }
 
-      input[type="checkbox"] {
-        width: auto;
-        margin: 0;
-        cursor: pointer;
-      }
+      input[type="checkbox"] { width: auto; margin: 0; cursor: pointer; }
 
       label {
         display: block;
@@ -112,18 +88,14 @@
         font-size: 16px;
         color: white;
         cursor: pointer;
-        position: relative;
-        overflow: hidden;
         transition: all 0.4s;
         margin-bottom: 15px;
         background-image: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #2563eb 100%);
       }
 
-      #btn-regras {
-        background-image: linear-gradient(135deg, #0b1220 0%, #1e3a8a 100%);
-      }
+      #btn-regras { background-image: linear-gradient(135deg, #0b1220 0%, #1e3a8a 100%); }
 
-      #horarios {
+      #horarios-info {
         font-size: 13px;
         margin-top: 20px;
         padding: 14px;
@@ -137,10 +109,7 @@
         display: none;
         position: fixed;
         z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
+        left: 0; top: 0; width: 100%; height: 100%;
         background-color: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(4px);
       }
@@ -152,17 +121,11 @@
         border-radius: 20px;
         width: 90%;
         max-width: 450px;
-        max-height: 80vh;
-        overflow-y: auto;
         text-align: left;
         border: 1px solid rgba(255,255,255,0.1);
       }
 
-      .close-btn {
-        background: #ef4444 !important;
-        box-shadow: none !important;
-        margin-top: 15px;
-      }
+      .close-btn { background: #ef4444 !important; margin-top: 15px; }
     </style>
   </head>
 
@@ -186,112 +149,88 @@
         <strong>"Agendar horário"</strong>
       </div>
 
-      <p id="alerta-regras">Atenção às regras da sala de informática</p>
-
       <label>Nome da Professora</label>
-      <input id="professora">
+      <input id="professora" placeholder="Ex: Maria Souza">
 
       <label>Componente Curricular</label>
-      <input id="componente">
+      <input id="componente" placeholder="Ex: Matemática">
 
       <label>Turma</label>
       <select id="turma">
-        <option></option>
+        <option value=""></option>
         <option>Creche A</option>
         <option>Creche B</option>
-        <option>Pré Escola A</option>
-        <option>Pré Escola B</option>
-        <option>Pré Escola C</option>
+        <option>Pré-Escola A</option>
+        <option>Pré-Escola B</option>
+        <option>Pré-Escola C</option>
       </select>
 
       <label>Turno</label>
       <select id="turno">
-        <option></option>
+        <option value=""></option>
         <option>Manhã</option>
         <option>Tarde</option>
       </select>
 
       <label>Quantidade de alunos</label>
-      <input type="number" id="quantidade">
+      <input type="number" id="quantidade" placeholder="Ex: 25">
 
       <label>Quais ferramentas serão utilizadas?</label>
-      <div style="background: rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
-        <label style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" name="ferramentas" value="Computadores">Computadores
-        </label>
-        <label style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" name="ferramentas" value="TV">TV
-        </label>
-        <label style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" name="ferramentas" value="Notebook Pessoal">Notebook Pessoal
-        </label>
-        <label style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" name="ferramentas" value="Pendrive">Pendrive
-        </label>
+      <div style="background: rgba(255,255,255,0.06); padding:10px; border-radius:10px; margin-bottom:12px;">
+        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" name="ferramentas" value="Computadores">Computadores</label>
+        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" name="ferramentas" value="TV">TV</label>
+        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" name="ferramentas" value="Caixa de som">Caixa de som</label>
+        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" name="ferramentas" value="Notebook Pessoal">Notebook Pessoal</label>
+        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" name="ferramentas" value="Pendrive">Pendrive</label>
       </div>
 
       <label>Qual metodologia será aplicada?</label>
-      <div style="background: rgba(255,255,255,0.06); padding:10px; border-radius:10px;">
-        <label style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" name="metodologia" value="Aula/Explicação">Aula/Explicação
-        </label>
-        <label style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" name="metodologia" value="Ensaiar para apresentação">Ensaiar para apresentação
-        </label>
-        <label style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" name="metodologia" value="Jogos pedagógicos">Jogos pedagógicos
-        </label>
-        <label style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" name="metodologia" value="Leitura">Leitura
-        </label>
-        <label style="display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" name="metodologia" value="Aula de pesquisa">Aula de pesquisa
-        </label>
+      <div style="background: rgba(255,255,255,0.06); padding:10px; border-radius:10px; margin-bottom:12px;">
+        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" name="metodologia" value="Aula/Explicação">Aula/Explicação</label>
+        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" name="metodologia" value="Ensaio para apresentação">Ensaio para apresentação</label>
+        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" name="metodologia" value="Jogos pedagógicos">Jogos pedagógicos</label>
+        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" name="metodologia" value="Leitura">Leitura</label>
+        <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox" name="metodologia" value="Aula de pesquisa">Aula de pesquisa</label>
       </div>
 
-      <label>Objetivo da aula (Opcional)</label>
-      <textarea id="objetivo"></textarea>
-
-      <label>Observações (Opcional)</label>
-      <textarea id="observacoes"></textarea>
-
       <label>Escolha o dia</label>
-      <input type="date" id="data" onchange="atualizarData(); atualizarDataFormatada()">
+      <input type="date" id="data" onchange="atualizarDataFormatada(); atualizarHorarios()">
 
       <div id="dataFormatada"></div>
 
       <label>Escolha o horário</label>
-      <select id="horario"></select>
+      <select id="horario">
+        <option value="">Selecione o dia primeiro</option>
+      </select>
+
+      <label>Objetivo da aula (Opcional)</label>
+      <textarea id="objetivo" placeholder="Descreva brevemente o objetivo"></textarea>
+
+      <label>Observações (Opcional)</label>
+      <textarea id="observacoes" placeholder="Caso haja alguma necessidade específica"></textarea>
 
       <button onclick="enviarWhatsApp()">Agendar horário</button>
 
-      <button id="btn-regras" onclick="abrirRegras()">
-        Regras da sala - clique aqui
-      </button>
+      <button id="btn-regras" onclick="abrirRegras()">Regras da sala - clique aqui</button>
 
-      <div id="horarios">
-        <strong>Atenção</strong><br><br>
-        Segunda a quinta:<br>
-        08:30–10:00 / 14:30–15:30<br><br>
-        Sexta:<br>
-        08:30–09:30
+      <div id="horarios-info">
+        <strong>Atenção aos blocos disponíveis:</strong><br>
+        Seg a Qui: 08:30 às 10:00 e 14:30 às 15:30<br>
+        Sex: 08:30 às 09:30
       </div>
     </div>
 
     <div id="modalRegras" class="modal">
       <div class="modal-content">
         <h3>Regras de Uso</h3>
-        <ol style="padding-left:20px; font-size:14px; line-height:1.6; color: rgba(255,255,255,0.9);">
-          <li><strong>Agendamento obrigatório</strong></li>
-          <li><strong>Responsabilidade pelo espaço</strong></li>
-          <li><strong>Supervisão constante</strong></li>
-          <li><strong>Permanência na sala</strong></li>
-          <li><strong>Proibição de alimentos e bebidas</strong></li>
-          <li><strong>Retirada de materiais</strong></li>
-          <li><strong>Não alterar configurações</strong></li>
-          <li><strong>Organização ao sair</strong></li>
-          <li><strong>Respeito ao planejamento pedagógico</strong></li>
-          <li><strong>Uso consciente do tempo</strong></li>
+        <ol style="padding-left:20px; font-size:14px; line-height:1.6; color: rgba(255,255,255,0.9); margin-top:10px;">
+          <li>A sala precisa ser agendada antes do uso e usada sempre com supervisão de um adulto.</li>
+          <li>Só pode ser usada para atividades pedagógicas, dentro do horário, sem permanência sem atividade.</li>
+          <li>Não é permitido comer ou beber na sala.</li>
+          <li>Não é permitido retirar nenhum material ou equipamento da sala sem autorização.</li>
+          <li>Não mexer em equipamentos ou configurações sem autorização.</li>
+          <li>Ao sair, deixar tudo organizado, limpo e os equipamentos desligados corretamente.</li>
+          <li>Respeitar o tempo de uso da sala para não prejudicar outras turmas ou profissionais.</li>
         </ol>
         <button class="close-btn" onclick="fecharRegras()">Fechar</button>
       </div>
@@ -307,77 +246,105 @@
         if (dataInput) {
           const partes = dataInput.split('-');
           const data = new Date(partes[0], partes[1] - 1, partes[2]);
-          const opcoesData = { day: 'numeric', month: 'long' };
-          const opcoesDiaSemana = { weekday: 'long' };
-          const dataPorExtenso = data.toLocaleDateString('pt-BR', opcoesData);
-          const diaSemana = data.toLocaleDateString('pt-BR', opcoesDiaSemana);
-          dataFormatadaDiv.textContent = `${dataPorExtenso}, ${diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1)}`;
-        } else {
-          dataFormatadaDiv.textContent = "";
+          let formatada = data.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+          // Capitalizar a primeira letra do dia da semana
+          dataFormatadaDiv.textContent = formatada.charAt(0).toUpperCase() + formatada.slice(1);
         }
       }
 
-      function atualizarData(){
-        const data=document.getElementById("data").value;
-        const select=document.getElementById("horario");
-        select.innerHTML="";
-        if(!data)return;
-        const partes = data.split('-');
-        const d = new Date(partes[0], partes[1] - 1, partes[2]);
-        let h=(d.getDay()>=1&&d.getDay()<=4)?
-        ["08:30","09:00","09:30","10:00","14:30","15:00","15:30"]:
-        ["08:30","09:00","09:30"];
-        h.forEach(hr=>{
-          let opt=document.createElement("option");
-          opt.value=opt.textContent=hr;
-          select.appendChild(opt);
+      function gerarSlots(inicioH, inicioM, fimH, fimM) {
+        let slots = [];
+        let atual = new Date();
+        atual.setHours(inicioH, inicioM, 0);
+        
+        let fim = new Date();
+        fim.setHours(fimH, fimM, 0);
+
+        while (atual <= fim) {
+          let h = String(atual.getHours()).padStart(2, '0');
+          let m = String(atual.getMinutes()).padStart(2, '0');
+          slots.push(`${h}:${m}`);
+          atual.setMinutes(atual.getMinutes() + 30);
+        }
+        return slots;
+      }
+
+      function atualizarHorarios() {
+        const dataInput = document.getElementById("data").value;
+        const selectHorario = document.getElementById("horario");
+        selectHorario.innerHTML = "";
+
+        if (!dataInput) return;
+
+        const partes = dataInput.split('-');
+        const data = new Date(partes[0], partes[1] - 1, partes[2]);
+        const diaSemana = data.getDay();
+
+        let horarios = [];
+
+        if (diaSemana >= 1 && diaSemana <= 4) { // Seg a Qui
+          horarios = [...gerarSlots(8, 30, 10, 0), ...gerarSlots(14, 30, 15, 30)];
+        } else if (diaSemana === 5) { // Sex
+          horarios = gerarSlots(8, 30, 9, 30);
+        } else {
+          horarios = ["Indisponível no fim de semana"];
+        }
+
+        horarios.forEach(hora => {
+          let el = document.createElement("option");
+          el.value = el.textContent = hora;
+          selectHorario.appendChild(el);
         });
       }
 
       function pegar(nome){
         let arr=[];
-        document.querySelectorAll(`input[name="${nome}"]:checked`)
-        .forEach(e=>arr.push(e.value));
+        document.querySelectorAll(`input[name="${nome}"]:checked`).forEach(e=>arr.push(e.value));
         return arr.join(", ");
       }
 
       function enviarWhatsApp(){
-        const dataInput = document.getElementById("data").value;
-        let dataFormatadaParaWhatsApp = "";
-        if (dataInput) {
-          const partes = dataInput.split('-');
-          const data = new Date(partes[0], partes[1] - 1, partes[2]);
-          const opcoesData = { day: 'numeric', month: 'long' };
-          const opcoesDiaSemana = { weekday: 'long' };
-          const dataPorExtenso = data.toLocaleDateString('pt-BR', opcoesData);
-          const diaSemana = data.toLocaleDateString('pt-BR', opcoesDiaSemana);
-          dataFormatadaParaWhatsApp = `${dataPorExtenso}, ${diaSemana.charAt(0).toUpperCase() + diaSemana.slice(1)}`;
+        const dataVal = document.getElementById("data").value;
+        const horaVal = document.getElementById("horario").value;
+        const professoraVal = document.getElementById("professora").value;
+        const componenteVal = document.getElementById("componente").value;
+        const turmaVal = document.getElementById("turma").value;
+        const turnoVal = document.getElementById("turno").value;
+        const quantidadeVal = document.getElementById("quantidade").value;
+        const ferramentasVal = pegar("ferramentas");
+        const metodologiaVal = pegar("metodologia");
+
+        if(!dataVal || !horaVal || horaVal.includes("Indisponível") || !professoraVal || !componentaVal || !turmaVal || !turnoVal) {
+          alert("Por favor, preencha todos os campos obrigatórios e selecione uma data e horário válidos.");
+          return;
         }
 
-        const msg=`Olá, gostaria de agendar um horário para utilizar a Sala de Informática, poderia olhar se esse está disponível?
+        // Criando a mensagem com quebras de linha e espaços
+        const msg = `Olá, gostaria de solicitar o agendamento da Sala de Informática.
 
-Data: ${dataFormatadaParaWhatsApp}
+Nome da Professora: ${professoraVal}
 
-Horário: ${horario.value}
+Componente Curricular: ${componentaVal}
 
-Professora: ${professora.value}
+Turma: ${turmaVal}
 
-Componente: ${componente.value}
+Turno: ${turnoVal}
 
-Turma: ${turma.value}
+Data solicitada: ${document.getElementById("dataFormatada").textContent}
 
-Turno: ${turno.value}
+Horário selecionado: ${horaVal}
 
-Alunos: ${quantidade.value}
+Quantidade de alunos: ${quantidadeVal}
 
-Ferramentas: ${pegar("ferramentas")}
+Ferramentas utilizadas: ${ferramentasVal}
 
-Metodologia: ${pegar("metodologia")}
+Metodologia aplicada: ${metodologiaVal}
 
-Objetivo: ${objetivo.value}
+Objetivo da aula: ${document.getElementById("objetivo").value}
 
-Observações: ${observacoes.value}`;
+Observações: ${document.getElementById("observacoes").value}`;
 
+        // Enviar para o WhatsApp
         window.open(`https://wa.me/5588992358152?text=${encodeURIComponent(msg)}`);
       }
     </script>
